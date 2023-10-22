@@ -51,27 +51,27 @@ namespace Refrigerator
                         Item itemToAdd = GetItem();
 
                         if (refrigerator1.AddItem(itemToAdd))
-                            Console.WriteLine("Item Added.");
-                        else Console.WriteLine("There is no available space for this product.");
+                            Console.WriteLine("item Added.");
+                        else Console.WriteLine("There is no available space for this item.");
                         break;
                     case 4:
-                        Console.WriteLine("Enter product Id that you want to take out of the refrigerator: ");
+                        Console.WriteLine("Enter item Id that you want to take out of the refrigerator: ");
                         int itemId = int.Parse(Console.ReadLine());
                         if (refrigerator1.RemoveItem(itemId) != null)
-                            Console.WriteLine("product removed.");
-                        else Console.WriteLine("Product Id don't exists");
+                            Console.WriteLine("item removed.");
+                        else Console.WriteLine("item Id does not exist.");
                         break;
                     case 5:
                         List<Item> expiredItems = new List<Item>();
                         expiredItems = refrigerator1.CleanRefrigerator();
                         if (expiredItems.Count > 0)
                         {
-                            Console.WriteLine("Product removed:");
+                            Console.WriteLine("item removed:");
                             foreach (Item item in expiredItems)
                                 Console.WriteLine(item.ToString());
 
                         }
-                        else Console.WriteLine("There are no expired products.");
+                        else Console.WriteLine("There are no expired items.");
                         break;
                     case 6:
                         Console.WriteLine("What would you like to get:");
@@ -81,21 +81,21 @@ namespace Refrigerator
                         List<Item> userFoodChoices = refrigerator1.FindFood(kashrut, itemType);
                         if (userFoodChoices.Count > 0)
                         {
-                            Console.WriteLine("The products that suit your choice: ");
+                            Console.WriteLine("The items that suit your choice: ");
                             foreach (var item in userFoodChoices)
                                 Console.WriteLine(item.ToString());
                         }
-                        else Console.WriteLine("There are no products that suit your choice.");
+                        else Console.WriteLine("There are no items that suit your choice.");
                         break;
                     case 7:
                         List<Item> items = refrigerator1.SortItemsByExpiryDate();
                         if (items.Count >0)
                         {
-                            Console.WriteLine("The products in the refrigerator are listed by expiration date:");
+                            Console.WriteLine("The items in the refrigerator are listed by expiration date:");
                             foreach (Item item in items)
                                 Console.WriteLine(item.ToString());
                         }
-                        else Console.WriteLine("There are no products.");
+                        else Console.WriteLine("There are no items.");
                         break;
                     case 8:
                         List<Shelf> sortedShelves = refrigerator1.SortShelvesByFreeSpace();
@@ -130,7 +130,7 @@ namespace Refrigerator
             string KashrutItem;
             while (true)
             {
-                Console.Write("Enter product kashrut (milky, meaty, parve): ");
+                Console.Write("Enter item kashrut (milky, meaty, parve): ");
                 KashrutItem = Console.ReadLine();
                 if (KashrutItem == "milky" || KashrutItem == "meaty" || KashrutItem == "parve")
                     break;
@@ -152,11 +152,11 @@ namespace Refrigerator
             string type;
             while (true)
             {
-                Console.Write("Enter product type (food/drink): ");
+                Console.Write("Enter item type (food/drink): ");
                 type = Console.ReadLine();
                 if (type == "food" || type == "drink")
                     break;
-                Console.WriteLine("You must choose food / drink.");
+                Console.WriteLine("You must choose food or drink.");
             }
             ItemType itemType;
             if (type == "food")
@@ -166,26 +166,53 @@ namespace Refrigerator
             return itemType;
             
         }
-        public static Item GetItem() 
+        public static Item GetItem()
         {
-            Console.Write("Enter product name: ");
+            Console.Write("Enter item name: ");
             string itemName = Console.ReadLine();
 
-            ItemType itemTypeUserChoise = GetItemType();
+            ItemType itemTypeUserChoice = GetItemType(); // Implement GetItemType()
 
-            Kashrut kashrutUserChoice = GetKashrut();
+            Kashrut kashrutUserChoice = GetKashrut(); // Implement GetKashrut()
+            int year, month, day;
 
-            Console.Write("Enter the product's expiration year: ");
-            int year = int.Parse(Console.ReadLine());
-            Console.Write("Enter the product's expiration month: ");
-            int month = int.Parse(Console.ReadLine());
-            Console.Write("Enter the product's expiration day: ");
-            int day = int.Parse(Console.ReadLine());
-            DateTime expiryDate = new DateTime(year, month, day);
-            Console.Write("Enter product size: ");
+            while (true)
+            {
+                Console.Write("Enter the item's expiration year (4 digits): ");
+                year = int.Parse(Console.ReadLine());
+                if (year >= 1000 && year <= 9999)
+                {
+                    break;
+                }
+                Console.WriteLine("Invalid year. Please enter a 4-digit year.");
+            }
+
+            while (true)
+            {
+                Console.Write("Enter the item's expiration month (2 digits between 01 and 12): ");
+                month = int.Parse(Console.ReadLine());
+                if (month >= 1 && month <= 12)
+                {
+                    break;
+                }
+                Console.WriteLine("Invalid month. Please enter a 2-digit month between 01 and 12.");
+            }
+
+            while (true)
+            {
+                Console.Write("Enter the item's expiration day (2 digits between 01 and 31): ");
+                day = int.Parse(Console.ReadLine());
+                if (day >= 1 && day <= 31)
+                {
+                    break;
+                }
+                Console.WriteLine("Invalid day. Please enter a 2-digit day between 01 and 31 based on the chosen month.");
+            }
+
+            Console.Write("Enter item size: ");
             int spaceOccupied = int.Parse(Console.ReadLine());
 
-            Item item = new Item(itemName, itemTypeUserChoise, kashrutUserChoice, expiryDate, spaceOccupied);
+            Item item = new Item(itemName, itemTypeUserChoice, kashrutUserChoice, new DateTime(year, month, day), spaceOccupied);
             return item;
         }
         public static List<Refrigerator> SortRefrigeratorsByAvailableSpace(List<Refrigerator> refrigerators)

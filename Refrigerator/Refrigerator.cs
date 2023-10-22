@@ -35,7 +35,6 @@ namespace Refrigerator
             return $"RefrigeratorID: {RefrigeratorID}, Model: {Model}, Color: {Color}, NumberOfShelves: {NumberOfShelves}";
         }
 
-
         public int GetAvailableSpace()
         {
             int availableSpace = 0;
@@ -63,7 +62,6 @@ namespace Refrigerator
 
         public Item RemoveItem(int itemID)
         {
-
             Item itemToRemove = null;
 
             foreach (var shelf in Shelves)
@@ -76,14 +74,9 @@ namespace Refrigerator
                         itemToRemove = item;
                         break;
                     }
-
                 }
             }
-
             return itemToRemove;
-
-
-
         }
 
         public List<Item> CleanRefrigerator()
@@ -141,22 +134,22 @@ namespace Refrigerator
         public string ShoppingPreparing()
         {
             if (GetAvailableSpace() >= 20)
-                return "There is enough free space in the fridge.";
+                return "There is enough free space in the refrigerator.";
 
             CleanRefrigerator();
 
             if (GetAvailableSpace() >= 20)
-                return "After removing expired products, there is enough free space in the fridge.";
+                return "After removing expired items, there is enough free space in the refrigerator.";
 
             RemoveItemsByParameters(Kashrut.milky, 3);
             if (GetAvailableSpace() >= 20)
-                return "The refrigerator has been emptied of all milk products that will expire in less than three days.";
+                return "The refrigerator has been emptied of all milk items that will expire in less than three days.";
             RemoveItemsByParameters(Kashrut.meaty, 7);
             if (GetAvailableSpace() >= 20)
-                return "The refrigerator has been emptied of all meat products that will expire in less than a week.";
+                return "The refrigerator has been emptied of all meat items that will expire in less than a week.";
             RemoveItemsByParameters(Kashrut.parve, 1);
             if (GetAvailableSpace() >= 20)
-                return "The fridge was cleared of all the parve products that were valid for less than a day.";
+                return "The fridge was cleared of all the parve items that were valid for less than a day.";
 
             return "Not enough space was freed up in the fridge. This is not the time to shop.";
 

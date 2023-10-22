@@ -6,16 +6,7 @@ using System.Threading.Tasks;
 
 namespace Refrigerator
 {
-    enum ItemType
-    {
-        food,
-        drink 
-    } enum Kashrut
-    {
-        milky, 
-        meaty,
-        parve
-    }
+    
     internal class Item
     {
         public static int GeneralItemID { get; set; } = 1;
