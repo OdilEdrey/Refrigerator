@@ -8,23 +8,23 @@ namespace Refrigerator
 {
     internal class Shelf
     {
-        public string Identifier { get; }
-        public int Floor { get; }
-        public double SpaceInSquareMeters { get; } 
-        public List<Item> Items { get; }
+        public int ShelfID { get; set; }
+        public int FloorNumber { get; set; }
+        public int SpaceAvailable { get; set; }
+        public List<Item> Items { get; set; }
 
-        public Shelf(string identifier, int floor)
+        public Shelf(int shelfID, int floorNumber, int spaceAvailable)
         {
-            Identifier = identifier;
-            Floor = floor;
-            SpaceInSquareMeters = 20;
+            ShelfID = shelfID;
+            FloorNumber = floorNumber;
+            SpaceAvailable = spaceAvailable;
             Items = new List<Item>();
         }
-
         public override string ToString()
         {
-            return $"{} {}";
+            return $"ShelfID: {ShelfID}, FloorNumber: {FloorNumber}, SpaceAvailable: {SpaceAvailable}, Items: {string.Join(", ", Items)}";
         }
+
 
     }
 }

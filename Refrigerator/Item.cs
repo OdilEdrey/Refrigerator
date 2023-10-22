@@ -6,29 +6,41 @@ using System.Threading.Tasks;
 
 namespace Refrigerator
 {
+    enum ItemType
+    {
+        food,
+        drink 
+    } enum Kashrut
+    {
+        milky, 
+        meaty,
+        parve
+    }
     internal class Item
     {
-        public string Identifier { get; }
-        public string Name { get; }
-        public Shelf Shelf { get; }
-        public string Type { get; }
-        public string Kashrut { get; }
-        public DateTime ExpirationDate { get; }
-        public double SpaceInSquareMeters { get; }
+        public static int GeneralItemID { get; set; } = 1;
+        public int ItemID { get; set; }
+        public string ProductName { get; set; }
+        public int ShelfID { get; set; }
+        public ItemType ItemType { get; set; }
+        public Kashrut Kashrut { get; set; }
+        public DateTime ExpiryDate { get; set; }
+        public int SpaceOccupied { get; set; }
 
-        public Item(string identifier, string name, string type, string kashrut, DateTime expirationDate, double spaceInSquareMeters)
+        public Item(string productName, ItemType itemType, Kashrut kashrut, DateTime expiryDate, int spaceOccupied)
         {
-            Identifier = identifier;
-            Name = name;
-             Type = type;
+            ItemID = GeneralItemID++;
+            ProductName = productName;
+            ItemType = itemType;
             Kashrut = kashrut;
-            ExpirationDate = expirationDate;
-            SpaceInSquareMeters = spaceInSquareMeters;
+            ExpiryDate = expiryDate;
+            SpaceOccupied = spaceOccupied;
         }
 
         public override string ToString()
         {
-            return $"{} {}";
+            return $"ItemID: {ItemID}, ProductName: {ProductName}, ItemType: {ItemType}, KosherType: {Kashrut}, ExpiryDate: {ExpiryDate}, SpaceOccupied: {SpaceOccupied}";
         }
+
     }
 }
